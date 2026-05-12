@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Actividad 2 </title>
+    <link rel="stylesheet" href="/static/styles.css">
+</head>
+
+<body class="login-body">
+
+    <div class="login-layout">
+        <!-- LADO IZQUIERDO: HÉROE CON IMAGEN DE FONDO -->
+        <div class="login-hero"
+            style="background-image: url('/img/fila-telefonos-celulares-rosados-caja-rosa-que-dice-verizon-parte-inferior_1020495-312912.avif');">
+            <div class="hero-overlay"></div>
+
+            <div class="hero-content">
+                <div class="hero-logo">
+                  
+                    <span class="logo-text-large"> PROGRAMACIÓN MÓVIL</span>
+                </div>
+
+                <div class="hero-title-container">
+                    <h1 class="hero-title">
+                        Survival Guide:<br>
+                        El <br>
+                        Reto Móvil<br>
+                        <span class="text-blue-highlight">Vive la experiencia</span>
+                    </h1>
+                </div>
+
+                <div class="hero-footer">
+                    <span> MA 2026</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- LADO DERECHO: AVENTURA DE TEXTO -->
+        <div class="login-form-section">
+            <div class="login-card">
+                <div class="card-header">
+                    <h2 class="portal-title">Bienvenidos </h2>
+                </div>
+
+                <div class="card-body">
+                    <p class="welcome-subtitle">Estudiante de ingreso, sigue las reglas para sobrevivir en la materia.</p>
+                    <hr class="divider">
+
+                    <!-- SECCIÓN 1: CÁMARA DE LAS REGLAS  -->
+                    <div id="seccionReglas" class="seccion">
+                        <h3> Cámara de las Reglas</h3>
+                        <ul>
+                            <li>Llegar puntual (tolerancia 10 min).</li>
+                            <li>Asistencia mínima 80%.</li>
+                            <li>Respeto a compañeros y profesor.</li>
+                            <li>Celular en silencio.</li>
+                            <li>Las faltas deberán estar justificadas mediante correo del tutor.</li>
+                        </ul>
+                        <div class="pregunta">
+                            <p> Pregunta 1: ¿Asistencia mínima requerida?</p>
+                            <input type="text" id="resp1Reglas" class="input-dark" placeholder="Ej: 80%">
+                            <button onclick="verificarRespuesta('reglas', 1)" class="btn-primary">Responder</button>
+                        </div>
+                        <div class="pregunta">
+                            <p> Pregunta 2: ¿Minutos de tolerancia?</p>
+                            <input type="text" id="resp2Reglas" class="input-dark" placeholder="Ej: 10">
+                            <button onclick="verificarRespuesta('reglas', 2)" class="btn-primary">Responder</button>
+                        </div>
+                        <div class="check-compromiso">
+                            <label><input type="checkbox" id="checkReglas" disabled> <strong> Comprendo y acepto</strong></label>
+                        </div>
+                    </div>
+
+                    <!-- ===== SECCIÓN 2: ORÁCULO DE LAS NOTAS ===== -->
+                    <div id="seccionNotas" class="seccion bloqueada">
+                        <h3>🔮 El Oráculo de las Notas</h3>
+                        <table class="tabla-notas">
+                            <thead>
+                                <tr><th>Tipo de Evidencia</th><th>P1</th><th>P2</th><th>P3</th></tr>
+                            </thead>
+                            <tbody>
+                                <tr><td>Evidencia de Conocimiento</td><td>40%</td><td>40%</td><td>10%</td></tr>
+                                <tr><td>Evidencia de Desempeño</td><td>20%</td><td>20%</td><td>10%</td></tr>
+                                <tr><td>Evidencia de Producto</td><td>30%</td><td>30%</td><td>30%</td></tr>
+                                <tr><td>Proyecto Integrador</td><td>10%</td><td>10%</td><td>50%</td></tr>
+                            </tbody>
+                        </table>
+                        <div class="pregunta">
+                            <p> Pregunta 1: Valor del PI en el 3er parcial</p>
+                            <input type="text" id="resp1Notas" class="input-dark" placeholder="Ej: 50%">
+                            <button onclick="verificarRespuesta('notas', 1)" class="btn-primary">Responder</button>
+                        </div>
+                        <div class="pregunta">
+                            <p> Pregunta 2: Suma total del Proyecto Integrador durante los 3 parciales</p>
+                            <input type="text" id="resp2Notas" class="input-dark" placeholder="Ej: 70%">
+                            <button onclick="verificarRespuesta('notas', 2)" class="btn-primary">Responder</button>
+                        </div>
+                        <div class="check-compromiso">
+                            <label><input type="checkbox" id="checkNotas" disabled> <strong> Comprendo las notas</strong></label>
+                        </div>
+                    </div>
+
+                    <!-- ===== SECCIÓN 3: SKILLS A DESBLOQUEAR ===== -->
+                    <div id="seccionSkills" class="seccion bloqueada">
+                        <h3> Skills a desbloquear</h3>
+                        <p><strong>Objetivo general:</strong></p>
+                        <ul>
+                            <li>Desarrollará aplicaciones móviles mediante lenguajes de programación, entornos de desarrollo, diseño de interfaces de usuario, arquitecturas, patrones de diseño y herramientas de programación móvil.</li>
+                        </ul>
+                        <div class="pregunta">
+                            <p> Pregunta 1: ¿La materia encamina a desarrollo móvil? (si/no)</p>
+                            <input type="text" id="resp1Skills" class="input-dark" placeholder="Ej: si">
+                            <button onclick="verificarRespuesta('skills', 1)" class="btn-primary">Responder</button>
+                        </div>
+                        <div class="pregunta">
+                            <p> Pregunta 2: Tecnología ejemplo</p>
+                            <input type="text" id="resp2Skills" class="input-dark" placeholder="Ej: Firebase, Android, Flutter">
+                            <button onclick="verificarRespuesta('skills', 2)" class="btn-primary">Responder</button>
+                        </div>
+                        <div class="check-compromiso">
+                            <label><input type="checkbox" id="checkSkills" disabled> <strong> Comprendo los objetivos</strong></label>
+                        </div>
+                    </div>
+
+                    <!-- ===== SECCIÓN 4: LÍNEA DEL TIEMPO ===== -->
+                    <div id="seccionTiempo" class="seccion bloqueada">
+                        <h3> Línea del Tiempo</h3>
+                        <table class="tabla-notas">
+                            <thead>
+                                <tr><th>1er Parcial</th><th>2do Parcial</th><th>3er Parcial</th><th>Final</th></tr>
+                            </thead>
+                            <tbody>
+                                <tr><td>02-06-26</td><td>07-07-26</td><td>11-08-26</td><td>17-08-26</td></tr>
+                            </tbody>
+                        </table>
+                        <div class="pregunta">
+                            <p> Pregunta 1: ¿Fecha del final?</p>
+                            <input type="text" id="resp1Tiempo" class="input-dark" placeholder="Ej: 17-08-26">
+                            <button onclick="verificarRespuesta('tiempo', 1)" class="btn-primary">Responder</button>
+                        </div>
+                        <div class="pregunta">
+                            <p> Pregunta 2: ¿Mes del segundo parcial?</p>
+                            <input type="text" id="resp2Tiempo" class="input-dark" placeholder="Ej: julio">
+                            <button onclick="verificarRespuesta('tiempo', 2)" class="btn-primary">Responder</button>
+                        </div>
+                        <div class="check-compromiso">
+                            <label><input type="checkbox" id="checkTiempo" disabled> <strong> Conozco las fechas</strong></label>
+                        </div>
+                    </div>
+
+                    <footer class="footer-text">
+                        <strong> Desbloquea cada sección con 2 respuestas correctas + compromiso</strong>
+                    </footer>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <script src="/static/script.js"></script>
+</body>
+
+</html>
