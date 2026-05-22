@@ -109,7 +109,6 @@ function guardarProducto() {
     estado:
       document.getElementById("p-estado").value,
   };
-  const idEdicion = document.getElementById("edit-id").value;
 
 
   const idEdicion =
