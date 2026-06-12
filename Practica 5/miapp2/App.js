@@ -4,6 +4,7 @@ import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View, Image } from 'react-native';
 import {Saludo} from './componentes/Saludo'
 import {Saludo2} from './componentes/Saludo2'
+import {Perfil} from './componentes/Perfil'
 
 
 /* Zona 2 : Main - Hogar de los componentes  */
@@ -11,7 +12,7 @@ export default function App() {
   return (
     <View style={styles.container}>
       <Image source={require('./assets/wave.png')}/>
-      <Text>Hola mundo RN!</Text>
+      <Text>Hola mundo RN!</Text> 
       <Text>---------------------Componente simple ----------------------</Text>
 
       <Saludo></Saludo>
@@ -19,7 +20,11 @@ export default function App() {
       <Text>-------------------Componente compuesto ---------------------</Text>
 
       <Saludo2></Saludo2>
-      
+
+      <Text>-------------------Componente propio ---------------------</Text>
+      <Perfil> </Perfil>
+
+
       <StatusBar style="auto" />
 
     </View>
