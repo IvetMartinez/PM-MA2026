@@ -1,41 +1,51 @@
+import React, { useState } from 'react';
+import { View, Text, Button, StyleSheet } from 'react-native';
 
-/* Destricturación */
-import { View, Text, Button } from 'react-native';
-import React,{useState} from 'react';
-
-export const Perfil = ({nombre,carrera, materia,cuatri}) => {
-    /* Declaracion de variable de estado */
-
-    const[mostrar,setMostrar] = useState(false)
+export const Perfil = ({ nombre, carrera, materia, cuatri, estiloE }) => {
+    const [mostrar, setMostrar] = useState(false);
 
     return (
-        <View>
-            <Text>{nombre}</Text>
-            { mostrar &&  
+        <View style={[estilos.tarjeta, estiloE]}>
+            <Text style={estilos.nombre}>{nombre}</Text>
 
-            <> 
-            <Text>{carrera}</Text>
-            <Text>{materia}</Text>
-            <Text>{cuatri}</Text>
-            </>
-            } 
-            <Button title='Mostrar perfil'
-            onPress={()=> setMostrar(!mostrar)}
+            {mostrar && (
+                <>
+                    <Text style={estilos.carrera}>{carrera}</Text>
+                    <Text style={estilos.otroTexto}>{materia}</Text>
+                    <Text style={estilos.otroTexto}>{cuatri}</Text>
+                </>
+            )}
+
+            <Button
+                title={mostrar ? 'Ocultar perfil' : 'Mostrar perfil'}
+                onPress={() => setMostrar(!mostrar)}
             />
         </View>
     );
-}
+};
 
+const estilos = StyleSheet.create({
+    nombre: {
+        fontSize: 24,
+        fontWeight: '700',
+        textTransform: 'uppercase',
+    },
 
-/*  import { View, Text } from 'react-native';
+    carrera: {
+        fontSize: 18,
+        color: 'blue',
+    },
 
-export const Perfil = (props) => {
-    return (
-        <View>
-            <Text>{props.nombre}</Text>
-            <Text>{props.carrera}</Text>
-            <Text>{props.materia}</Text>
-            <Text>{props.cuatri}</Text>
-        </View>
-    );
-} */
+    otroTexto: {
+        fontSize: 12,
+        fontStyle: 'italic',
+    },
+
+    tarjeta: {
+        borderWidth: 3,
+        borderRadius: 10,
+        margin: 20,
+        padding: 25,
+        width: 300,
+    },
+});
