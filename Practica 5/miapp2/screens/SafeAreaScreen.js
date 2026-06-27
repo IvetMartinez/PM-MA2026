@@ -1,95 +1,120 @@
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, View, Text, ScrollView, SafeAreaView, Button } from 'react-native';
+/* Exposiciín Equipo 1*/
+/* Zona 1: Importaciones */
 import React, { useState } from 'react';
+import {
+    SafeAreaView,
+    ScrollView,
+    View,
+    Text,
+    StyleSheet,
+    Switch,
+} from 'react-native';
 
+/* Zona 2: Componente */
 export default function SafeAreaScreen() {
-    const [scrollEnabled, setScrollEnabled] = useState(true);
-    const [fontSize, setFontSize] = useState(42);
-    const [scrollY, setScrollY] = useState(0);
+
+    const [activo, setActivo] = useState(true);
+
+    const Contenedor = activo ? SafeAreaView : View;
 
     return (
-        <SafeAreaView style={styles.container}>
+        <Contenedor style={styles.fondo}>
 
-            <Text style={styles.info}>
-                Scroll: {scrollEnabled ? 'Activo ' : 'Inactivo '}  |  
-                Fuente: {fontSize}px  |  
-                Y: {scrollY.toFixed(0)}px
+            <Text style={styles.titulo}>SafeAreaView y ScrollView</Text>
+
+            <Text style={styles.descripcion}>
+                SafeAreaView evita que el contenido se tape con el notch del celular.
+                Apaga el switch para ver la diferencia.
             </Text>
 
-            <View style={styles.botones}>
-                <Button title={scrollEnabled ? 'Desactivar Scroll' : 'Activar Scroll'} onPress={() => setScrollEnabled(!scrollEnabled)}/>
-                <Button title={fontSize === 42 ? 'Texto pequeño' : 'Texto grande'} onPress={() => setFontSize(f => f === 42 ? 20 : 42)} />
+            <View style={styles.fila}>
+                <Text style={styles.etiqueta}> Activar SafeAreaView </Text>
+
+                {/* Parte importante */}
+                <Switch
+                    value={activo}
+                    onValueChange={(valor) => setActivo(valor)}
+                />
             </View>
 
-            {/* props más usadas */}
-            <ScrollView
-                style={styles.scrollView}
-                scrollEnabled={scrollEnabled}
-                showsVerticalScrollIndicator={true}
-                contentContainerStyle={styles.scrollContent}
-                onScroll={(e) => setScrollY(e.nativeEvent.contentOffset.y)}
-                scrollEventThrottle={16}
-            >
-                <Text style={[styles.text, { fontSize }]}>
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-                    eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad
-                    minim veniam, quis nostrud exercitation ullamco laboris nisi ut
-                    aliquip ex ea commodo consequat. Duis aute irure dolor in
-                    reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
-                    pariatur. Excepteur sint occaecat cupidatat non proident, sunt in
-                    culpa qui officia deserunt mollit anim id est laborum.
+            <Text style={styles.descripcion}>
+                ScrollView permite hacer scroll cuando hay mucho contenido.
+            </Text>
 
-                    {'\n\n'}
-
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-                    eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad
-                    minim veniam, quis nostrud exercitation ullamco laboris nisi ut
-                    aliquip ex ea commodo consequat. Duis aute irure dolor in
-                    reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
-                    pariatur. Excepteur sint occaecat cupidatat non proident, sunt in
-                    culpa qui officia deserunt mollit anim id est laborum.
-                </Text>
+            <ScrollView style={styles.lista}>
+                <View style={[styles.tarjeta, { backgroundColor: '#e74c3c' }]}>
+                    <Text style={styles.textoTarjeta}>Elemento 1</Text>
+                </View>
+                <View style={[styles.tarjeta, { backgroundColor: '#3498db' }]}>
+                    <Text style={styles.textoTarjeta}>Elemento 2</Text>
+                </View>
+                <View style={[styles.tarjeta, { backgroundColor: '#2ecc71' }]}>
+                    <Text style={styles.textoTarjeta}>Elemento 3</Text>
+                </View>
+                <View style={[styles.tarjeta, { backgroundColor: '#f39c12' }]}>
+                    <Text style={styles.textoTarjeta}>Elemento 4</Text>
+                </View>
+                <View style={[styles.tarjeta, { backgroundColor: '#9b59b6' }]}>
+                    <Text style={styles.textoTarjeta}>Elemento 5</Text>
+                </View>
+                <View style={[styles.tarjeta, { backgroundColor: '#1abc9c' }]}>
+                    <Text style={styles.textoTarjeta}>Elemento 6</Text>
+                </View>
+                <View style={[styles.tarjeta, { backgroundColor: '#727272' }]}>
+                    <Text style={styles.textoTarjeta}>Elemento 7</Text>
+                </View>
             </ScrollView>
 
-            <StatusBar style="auto" />
-        </SafeAreaView>
+        </Contenedor>
     );
 }
 
+/* Zona 3: Estilos */
 const styles = StyleSheet.create({
-    container: {
+    fondo: {
         flex: 1,
-        paddingTop: StatusBar.currentHeight, // margen
+        backgroundColor: '#1a1a2e',
+        padding: 20,
     },
     titulo: {
-        fontSize: 16,
-        fontWeight: '600',
-        padding: 12,
-        borderBottomWidth: 0.5,
-        borderBottomColor: '#ccc',
+        fontSize: 22,
+        fontWeight: 'bold',
+        color: '#ffffff',
+        textAlign: 'center',
+        marginBottom: 10,
     },
-    info: {
-        fontSize: 12,
-        color: '#666',
-        paddingHorizontal: 12,
-        paddingVertical: 6,
-        backgroundColor: '#f0f0f0',
+    descripcion: {
+        fontSize: 13,
+        color: '#aaaaaa',
+        textAlign: 'center',
+        marginBottom: 12,
     },
-    botones: {
+    fila: {
         flexDirection: 'row',
-        justifyContent: 'space-around',
-        paddingVertical: 8,
-        borderBottomWidth: 0.5,
-        borderBottomColor: '#ccc',
+        justifyContent: 'space-between',
+        alignItems: 'center',
+        backgroundColor: 'rgba(255,255,255,0.08)',
+        borderRadius: 12,
+        padding: 12,
+        marginBottom: 16,
     },
-    scrollView: {
-        backgroundColor: 'pink',
-        flex: 1,        // ← clave para que el scroll funcione
+    etiqueta: {
+        color: '#ffffff',
+        fontSize: 14,
     },
-    scrollContent: {
-        padding: 12,    // contentContainerStyle para padding interior
+    lista: {
+        flex: 1,
     },
-    text: {
-        // fontSize viene dinámico del estado
+    tarjeta: {
+        height: 80,
+        borderRadius: 12,
+        justifyContent: 'center',
+        alignItems: 'center',
+        marginBottom: 12,
+    },
+    textoTarjeta: {
+        color: '#ffffff',
+        fontSize: 16,
+        fontWeight: 'bold',
     },
 });
