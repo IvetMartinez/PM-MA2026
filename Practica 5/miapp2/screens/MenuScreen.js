@@ -4,7 +4,7 @@ import React, { useState } from 'react';
 import CardsScreen from './CardsScreen';
 import SafeAreaScreen from './SafeAreaScreen';
 import PressableScreen from './PressableScreen';
-
+import TextInputScreen from './TextInputScreen'
 export default function MenuScreen() {
     const [screen, setScreen] = useState('Menu');
     switch (screen) {
@@ -14,16 +14,16 @@ export default function MenuScreen() {
 
         case 'SafeArea':
             return (
-            <SafeAreaScreen
-        regresar={() => setScreen('Menu')}
-        />
-    );
+                <SafeAreaScreen
+                    regresar={() => setScreen('Menu')}
+                />
+            );
 
         case 'Pressable':
             return <PressableScreen />
 
         case 'TextInput':
-            return <PressableScreen />
+            return <TextInputScreen />
 
         case 'FlatList':
             return <FlatListScreen />
@@ -48,17 +48,17 @@ export default function MenuScreen() {
 
                     <Button onPress={() => setScreen('SafeArea')} title='SafeAreaView - ScrollView' />
 
-                    <Button onPress={() => setScreen('Pressable')} title='Pressable & Switch' />   
-                    
-                    <Button onPress={() => setScreen('TextInput')} title='TextInput & Alert' />   
-                    
+                    <Button onPress={() => setScreen('Pressable')} title='Pressable & Switch' />
+
+                    <Button onPress={() => setScreen('TextInput')} title='TextInput & Alert' />
+
                     <Button onPress={() => setScreen('SafeArea')} title='FlatList & Section List' />
 
-                    <Button onPress={() => setScreen('Pressable')} title='ImageBackgroung & SlapshScreen' />   
-                    
-                    <Button onPress={() => setScreen('TextInput')} title='ActivityIndicator, KeyboardAvoidingView' />   
-                    
-                    <Button onPress={() => setScreen('TextInput')} title='Modal & BottomSheet' />   
+                    <Button onPress={() => setScreen('Pressable')} title='ImageBackgroung & SlapshScreen' />
+
+                    <Button onPress={() => setScreen('TextInput')} title='ActivityIndicator, KeyboardAvoidingView' />
+
+                    <Button onPress={() => setScreen('TextInput')} title='Modal & BottomSheet' />
 
                     <StatusBar style="auto" />
                 </View>
@@ -76,7 +76,7 @@ const styles = StyleSheet.create({
         flexDirection: 'column',
         gap: 10,
     },
-        title: {
+    title: {
         fontSize: 30,
         fontWeight: 'bold',
         textAlign: 'center',
