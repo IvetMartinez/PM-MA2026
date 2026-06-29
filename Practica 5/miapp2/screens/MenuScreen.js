@@ -42,7 +42,7 @@ export default function MenuScreen() {
             return (
 
                 <View style={styles.container}>
-                    <Text> Menú de Prácticas </Text>
+                    <Text style={styles.title}>Menú de Prácticas</Text>
 
                     <Button onPress={() => setScreen('Cards')} title='Cards' />
 
@@ -66,6 +66,7 @@ export default function MenuScreen() {
     }
 }
 
+
 const styles = StyleSheet.create({
     container: {
         flex: 1,
@@ -75,5 +76,11 @@ const styles = StyleSheet.create({
         flexDirection: 'column',
         gap: 10,
     },
+        title: {
+        fontSize: 30,
+        fontWeight: 'bold',
+        textAlign: 'center',
+        color: 'pink',
+        marginBottom: 8,
+    },
 });
-
