@@ -4,7 +4,10 @@ import React, { useState } from 'react';
 import CardsScreen from './CardsScreen';
 import SafeAreaScreen from './SafeAreaScreen';
 import PressableScreen from './PressableScreen';
-import TextInputScreen from './TextInputScreen'
+import TextInputScreen from './TextInputScreen';
+import FlatListScreen from './FlatListScreen';
+
+
 export default function MenuScreen() {
     const [screen, setScreen] = useState('Menu');
     switch (screen) {
@@ -31,12 +34,6 @@ export default function MenuScreen() {
         case 'ImageBackgroung':
             return <ImageBackgroungScreen />
 
-        case 'Pressable':
-            return <PressableScreen />
-
-        case 'TextInput':
-            return <PressableScreen />
-
         case 'Menu':
         default:
             return (
@@ -52,13 +49,13 @@ export default function MenuScreen() {
 
                     <Button onPress={() => setScreen('TextInput')} title='TextInput & Alert' />
 
-                    <Button onPress={() => setScreen('SafeArea')} title='FlatList & Section List' />
+                    <Button onPress={() => setScreen('FlatList')} title='FlatList & Section List' />
 
-                    <Button onPress={() => setScreen('Pressable')} title='ImageBackgroung & SlapshScreen' />
+                    <Button onPress={() => setScreen('ImageBackground')} title='ImageBackground & SplashScreen' />
 
-                    <Button onPress={() => setScreen('TextInput')} title='ActivityIndicator, KeyboardAvoidingView' />
+                    <Button onPress={() => setScreen('ActivityIndicator')} title='ActivityIndicator, KeyboardAvoidingView' />
 
-                    <Button onPress={() => setScreen('TextInput')} title='Modal & BottomSheet' />
+                    <Button onPress={() => setScreen('Modal')} title='Modal & BottomSheet' />
 
                     <StatusBar style="auto" />
                 </View>
