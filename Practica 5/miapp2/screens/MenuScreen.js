@@ -6,6 +6,7 @@ import SafeAreaScreen from './SafeAreaScreen';
 import PressableScreen from './PressableScreen';
 import TextInputScreen from './TextInputScreen';
 import FlatListScreen from './FlatListScreen';
+import ImageBackgroungScreen from './ImageBackgroungScreen'
 
 
 export default function MenuScreen() {
@@ -51,7 +52,7 @@ export default function MenuScreen() {
 
                     <Button onPress={() => setScreen('FlatList')} title='FlatList & Section List' />
 
-                    <Button onPress={() => setScreen('ImageBackground')} title='ImageBackground & SplashScreen' />
+                    <Button onPress={() => setScreen('ImageBackgroung')} title='ImageBackgroung & SplashScreen' />
 
                     <Button onPress={() => setScreen('ActivityIndicator')} title='ActivityIndicator, KeyboardAvoidingView' />
 
