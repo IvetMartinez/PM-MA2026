@@ -6,8 +6,8 @@ import SafeAreaScreen from './SafeAreaScreen';
 import PressableScreen from './PressableScreen';
 import TextInputScreen from './TextInputScreen';
 import FlatListScreen from './FlatListScreen';
-import ImageBackgroungScreen from './ImageBackgroungScreen'
-
+import ImageBackgroundScreen from './ImageBackgroundScreen';
+import ActivityIndicatorScreen from './ActivityIndicatorScreen';
 
 export default function MenuScreen() {
     const [screen, setScreen] = useState('Menu');
@@ -32,8 +32,12 @@ export default function MenuScreen() {
         case 'FlatList':
             return <FlatListScreen />
 
-        case 'ImageBackgroung':
-            return <ImageBackgroungScreen />
+        case 'ImageBackground':
+            return <ImageBackgroundScreen />
+
+
+        case 'ActivityIndicator':
+            return <ActivityIndicatorScreen />
 
         case 'Menu':
         default:
@@ -52,7 +56,7 @@ export default function MenuScreen() {
 
                     <Button onPress={() => setScreen('FlatList')} title='FlatList & Section List' />
 
-                    <Button onPress={() => setScreen('ImageBackgroung')} title='ImageBackgroung & SplashScreen' />
+                    <Button onPress={() => setScreen('ImageBackground')} title='ImageBackground & SplashScreen' />
 
                     <Button onPress={() => setScreen('ActivityIndicator')} title='ActivityIndicator, KeyboardAvoidingView' />
 
