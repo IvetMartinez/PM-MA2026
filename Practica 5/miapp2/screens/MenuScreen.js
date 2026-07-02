@@ -8,6 +8,7 @@ import TextInputScreen from './TextInputScreen';
 import FlatListScreen from './FlatListScreen';
 import ImageBackgroundScreen from './ImageBackgroundScreen';
 import ActivityIndicatorScreen from './ActivityIndicatorScreen';
+import ModalScreen from './ModalScreen'
 
 export default function MenuScreen() {
     const [screen, setScreen] = useState('Menu');
@@ -38,6 +39,9 @@ export default function MenuScreen() {
 
         case 'ActivityIndicator':
             return <ActivityIndicatorScreen />
+
+        case 'Modal':
+            return <ModalScreen />
 
         case 'Menu':
         default:
