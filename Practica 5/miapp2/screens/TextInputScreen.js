@@ -26,7 +26,7 @@ export default function TextInputScreen() {
             alertManager("Validación", "Todos los campos son obligatorios");
             return;
         }
-        
+
         // Uso de backticks (`) para la interpolación correcta
         alertManager("Éxito", `Registro procesado para: ${nombre}`);
     };
@@ -72,18 +72,18 @@ export default function TextInputScreen() {
 }
 
 const styles = StyleSheet.create({
-    container: { 
-        flex: 1, 
-        justifyContent: 'center', 
-        padding: 20, 
-        backgroundColor: '#f5f6fa' 
+    container: {
+        flex: 1,
+        justifyContent: 'center',
+        padding: 20,
+        backgroundColor: '#f5f6fa'
     },
-    input: { 
-        borderWidth: 1, 
+    input: {
+        borderWidth: 1,
         borderColor: '#dcdde1',
-        padding: 12, 
-        borderRadius: 8, 
-        marginBottom: 12, 
-        backgroundColor: '#fff' 
+        padding: 12,
+        borderRadius: 8,
+        marginBottom: 12,
+        backgroundColor: '#fff'
     }
 });

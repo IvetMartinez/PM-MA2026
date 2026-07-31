@@ -1,24 +1,26 @@
 import React, { useState, useEffect } from 'react';
-import { View,Text,StyleSheet, ImageBackground,ActivityIndicator} from 'react-native';
+import {
+    View,
+    Text,
+    StyleSheet,
+    ImageBackground,
+    ActivityIndicator,
+    Button // Añadido por si quieres regresar al menú
+} from 'react-native';
 
-import * as SplashScreen from 'expo-splash-screen';
+// Borramos la importación y ejecución de expo-splash-screen aquí
 
-SplashScreen.preventAutoHideAsync().catch(() => {
-    /* Manejar errores silenciosos */
-});
-
-export default function ImageBackgroungScreen() {
+export default function ImageBackgroundScreen({ regresar }) { // Puedes pasarle la prop para volver
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
         async function prepararAplicacion() {
             try {
-
+                // Simula la carga de 3 segundos
                 await new Promise((resolve) => setTimeout(resolve, 3000));
             } catch (e) {
                 console.warn(e);
             } finally {
-
                 setLoading(false);
             }
         }
@@ -26,15 +28,7 @@ export default function ImageBackgroungScreen() {
         prepararAplicacion();
     }, []);
 
-
-    useEffect(() => {
-        if (!loading) {
-
-            SplashScreen.hideAsync();
-        }
-    }, [loading]);
-
-
+    // Esta es tu pantalla de carga personalizada (no la de Expo)
     if (loading) {
         return (
             <View style={styles.splash}>
@@ -44,19 +38,22 @@ export default function ImageBackgroungScreen() {
         );
     }
 
-
     return (
         <ImageBackground
             source={{ uri: 'https://picsum.photos/500/900' }}
             style={styles.background}
             resizeMode="cover"
         >
-            {/* El overlay ayuda a que los textos blancos contrasten y sean legibles */}
             <View style={styles.overlay}>
                 <Text style={styles.titulo}>Bienvenido a React Native</Text>
                 <Text style={styles.subtitulo}>
                     Ejemplo de ImageBackground y SplashScreen
                 </Text>
+                
+                {/* Opcional: Un botón para regresar al menú principal */}
+                {regresar && (
+                    <Button title="Volver al Menú" color="pink" onPress={regresar} />
+                )}
             </View>
         </ImageBackground>
     );
@@ -96,5 +93,6 @@ const styles = StyleSheet.create({
         fontSize: 18,
         color: '#e0e0e0',
         textAlign: 'center',
+        marginBottom: 20,
     },
 });

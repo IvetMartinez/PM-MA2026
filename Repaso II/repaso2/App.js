@@ -91,7 +91,7 @@ export default function RegistrodeLibrosLeidos() {
   // Render de la interfaz principal de la App
   return (
     <ImageBackground
-      source={{ uri: 'https://images.unsplash.com/photo-1507842217343-583bb7270b66?q=80&w=1000' }}
+      source={{ uri: 'https://t3.ftcdn.net/jpg/09/03/98/56/360_F_903985637_hYTyUJGw6H8RJjtJEwbqEraMQxLWCFv7.jpg' }}
       style={styles.background}
       resizeMode="cover"
     >
@@ -187,7 +187,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   splashText: {
-    fontSize: 28,
+    fontSize: 18,
     fontWeight: 'bold',
     color: 'blue-violet',
   },
@@ -217,7 +217,7 @@ const styles = StyleSheet.create({
     fontSize: 16,
   },
   button: {
-    backgroundColor: '#4a3728',
+    backgroundColor: '#0f47b8',
     padding: 15,
     borderRadius: 5,
     alignItems: 'center',
