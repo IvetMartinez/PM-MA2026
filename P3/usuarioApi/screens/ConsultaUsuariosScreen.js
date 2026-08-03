@@ -1,63 +1,111 @@
-import { SafeAreaView } from 'react-native-safe-area-context';
 import React, { useState, useEffect } from 'react';
-import {View, Text, FlatList, StyleSheet,
+import {
+  View,
+  Text,
+  FlatList,
+  StyleSheet,
+  TouchableOpacity,
 } from 'react-native';
 
-export default function ConsultaUsuariosScreen() {
+import { SafeAreaView } from 'react-native-safe-area-context';
+import { useRouter } from 'expo-router';
 
+export default function ConsultaUsuariosScreen() {
   const [usuarios, setUsuarios] = useState([]);
+  const [cargando, setCargando] = useState(false);
+
+  const router = useRouter();
 
   const obtenerUsuarios = async () => {
     try {
-      const respuesta = await fetch('http://192.168.0.104:5000/v1/usuarios/');
+      setCargando(true);
+
+      const respuesta = await fetch(
+        'http://192.168.0.104:5000/v1/usuarios/'
+      );
+
+      if (!respuesta.ok) {
+        throw new Error(`Error HTTP: ${respuesta.status}`);
+      }
+
       const datos = await respuesta.json();
-      console.log("Respuesta API: ", datos);
-      setUsuarios(datos.usuarios)
+
+      console.log('Respuesta API:', datos);
+
+      setUsuarios(datos.usuarios || []);
     } catch (error) {
-      console.log("Error API: ", error);
+      console.log('Error API:', error);
+      setUsuarios([]);
+    } finally {
+      setCargando(false);
     }
   };
 
+  useEffect(() => {
+    obtenerUsuarios();
+  }, []);
 
-  useEffect(() => { obtenerUsuarios(); }, [])
+  const irADetalle = (usuarioSeleccionado) => {
+    console.log('Usuario enviado:', usuarioSeleccionado);
+
+    router.push({
+      pathname: '/detalle',
+      params: {
+        usuario: JSON.stringify(usuarioSeleccionado),
+      },
+    });
+  };
 
   const renderTarjeta = ({ item }) => (
     <View style={styles.card}>
-
       <Text style={styles.nombre}>{item.nombre}</Text>
 
-      <View style={styles.linea}></View>
+      <View style={styles.linea} />
 
       <Text style={styles.info}>
         Edad: {item.edad} años
       </Text>
 
+      <TouchableOpacity
+        style={styles.botonDetalle}
+        onPress={() => irADetalle(item)}
+      >
+        <Text style={styles.textoBotonDetalle}>
+          Ver detalle →
+        </Text>
+      </TouchableOpacity>
     </View>
   );
 
   return (
-
     <SafeAreaView style={styles.container}>
-
       <Text style={styles.titulo}>
         Lista de Usuarios
       </Text>
 
-      <FlatList
-        data={usuarios}
-        keyExtractor={(item) => item.id}
-        renderItem={renderTarjeta}
-        showsVerticalScrollIndicator={false}
-        contentContainerStyle={{ paddingBottom: 20 }}
-      />
-
+      {cargando ? (
+        <Text style={styles.mensaje}>
+          Cargando usuarios...
+        </Text>
+      ) : (
+        <FlatList
+          data={usuarios}
+          keyExtractor={(item) => String(item.id)}
+          renderItem={renderTarjeta}
+          showsVerticalScrollIndicator={false}
+          contentContainerStyle={styles.contenidoLista}
+          ListEmptyComponent={
+            <Text style={styles.mensaje}>
+              No hay usuarios registrados
+            </Text>
+          }
+        />
+      )}
     </SafeAreaView>
   );
-
 }
 
 const styles = StyleSheet.create({
-
   container: {
     flex: 1,
     backgroundColor: '#F5F7FA',
@@ -105,4 +153,27 @@ const styles = StyleSheet.create({
     color: '#4B5563',
   },
 
+  botonDetalle: {
+    alignSelf: 'flex-end',
+    marginTop: 14,
+    paddingVertical: 8,
+    paddingHorizontal: 12,
+  },
+
+  textoBotonDetalle: {
+    color: '#2563EB',
+    fontSize: 14,
+    fontWeight: 'bold',
+  },
+
+  mensaje: {
+    textAlign: 'center',
+    color: '#6B7280',
+    fontSize: 16,
+    marginTop: 30,
+  },
+
+  contenidoLista: {
+    paddingBottom: 20,
+  },
 });

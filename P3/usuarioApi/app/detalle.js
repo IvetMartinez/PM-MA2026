@@ -12,14 +12,47 @@ import {
 import { useLocalSearchParams, useRouter } from 'expo-router';
 
 export default function DetalleUsuario() {
-
-    const { usuario } = useLocalSearchParams();
+    const params = useLocalSearchParams();
     const router = useRouter();
 
-    const datosUsuario = JSON.parse(usuario);
+    let datosUsuario = null;
+
+    try {
+        const usuarioRecibido = Array.isArray(params.usuario)
+            ? params.usuario[0]
+            : params.usuario;
+
+        datosUsuario = usuarioRecibido
+            ? JSON.parse(usuarioRecibido)
+            : null;
+
+    } catch (error) {
+        console.log('Error al convertir el usuario:', error);
+    }
 
     const [modalVisible, setModalVisible] = useState(false);
     const [cargando, setCargando] = useState(false);
+
+    if (!datosUsuario) {
+        return (
+            <SafeAreaView style={styles.container}>
+                <View style={styles.card}>
+                    <Text style={styles.titulo}>
+                        No se recibieron los datos del usuario
+                    </Text>
+
+                    <TouchableOpacity
+                        style={styles.botonActualizar}
+                        onPress={() => router.replace('/(tabs)/consulta')}
+                    >
+                        <Text style={styles.textoBoton}>
+                            Regresar
+                        </Text>
+                    </TouchableOpacity>
+                </View>
+            </SafeAreaView>
+        );
+    }
 
     const mostrarMensaje = (titulo, mensaje) => {
         if (Platform.OS === 'web') {
