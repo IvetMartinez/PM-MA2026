@@ -1,149 +1,183 @@
 import React, { useState } from 'react';
-import {View,SafeAreaView,Text,TextInput,Pressable,StyleSheet,} from 'react-native';
-import{View,SafeAreaView,Text,TextInput,Pressable,StyleSheet,Alert,Platform} from 'react-native';
+import {
+  View,
+  Text,
+  TextInput,
+  Pressable,
+  StyleSheet,
+  Alert,
+  Platform,
+  KeyboardAvoidingView,
+  ScrollView,
+  Keyboard,
+  TouchableWithoutFeedback,
+} from 'react-native';
 
-export default function App() {
+import { SafeAreaView } from 'react-native-safe-area-context';
+
+export default function AltaUsuariosScreen() {
   const [nombre, setNombre] = useState('');
   const [edad, setEdad] = useState('');
   const [cargando, setCargando] = useState(false);
 
-  const mostrarMensaje = (titulo,mensaje) => {
-    if(Platform.OS === 'web'){
-      window.alert(`${titulo}\n${mensaje}`);
-    }else{
-      Alert.alert(titulo,mensaje)
+  const API_URL = 'http://192.168.0.104:5000';
+
+  const mostrarMensaje = (titulo, mensaje) => {
+    if (Platform.OS === 'web') {
+      window.alert(`${titulo}: ${mensaje}`);
+    } else {
+      Alert.alert(titulo, mensaje);
     }
   };
 
-  const guardarUsuario = async() => {
-    if(nombre.trim() === '' || edad.trim() === ''){
-      mostrarMensaje("Vacios", "Campos Obligatorios ")
+  const guardarUsuario = async () => {
+    Keyboard.dismiss();
+
+    if (!nombre.trim() || !edad.trim()) {
+      mostrarMensaje('Error', 'Completa todos los campos.');
       return;
     }
 
-    try{
-      setCargando(true)
-      const respuesta = await fetch('http://192.168.100.95:5000/v1/usuarios',
-        {
-          method:"POST",
-          headers:{"Content-type": "application/json"},
-          body: JSON.stringify({nombre:nombre, edad:Number(edad)})
-        }
+    if (Number.isNaN(Number(edad)) || Number(edad) <= 0) {
+      mostrarMensaje('Error', 'Ingresa una edad válida.');
+      return;
+    }
 
-      );
+    try {
+      setCargando(true);
+
+      const respuesta = await fetch(`${API_URL}/v1/usuarios/`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          nombre: nombre.trim(),
+          edad: Number(edad),
+        }),
+      });
+
       const datos = await respuesta.json();
 
-      console.log("Respuesta API: ",datos);
-      mostrarMensaje("Exito", "Usuario Registrado");
+      console.log('Estado HTTP:', respuesta.status);
+      console.log('Respuesta API:', datos);
+
+      if (!respuesta.ok) {
+        throw new Error(datos?.mensaje || 'No se pudo registrar al usuario.');
+      }
+
+      mostrarMensaje('Éxito', 'Usuario registrado correctamente.');
 
       setNombre('');
       setEdad('');
+    } catch (error) {
+      console.log('Error al guardar:', error);
 
-
-    }catch(error){
-      console.log("Error API", error);
-      mostrarMensaje("Error", "No fue posible guardar");
-    }
-    finally{
+      mostrarMensaje(
+        'Error',
+        error.message || 'No fue posible conectarse con la API.'
+      );
+    } finally {
       setCargando(false);
     }
-  }
-
-
-  
+  };
 
   return (
-    <SafeAreaView style={styles.container}>
+    <SafeAreaView style={styles.safeArea}>
+      <KeyboardAvoidingView
+        style={styles.contenedor}
+        behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+        keyboardVerticalOffset={Platform.OS === 'ios' ? 80 : 20}
+      >
+        <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+          <ScrollView
+            contentContainerStyle={styles.contenido}
+            keyboardShouldPersistTaps="handled"
+          >
+            <Text style={styles.titulo}>Agregar usuario</Text>
 
-      <View style={styles.card}>
+            <TextInput
+              style={styles.input}
+              placeholder="Nombre"
+              value={nombre}
+              onChangeText={setNombre}
+              returnKeyType="next"
+            />
 
-        <Text style={styles.titulo}>
-          Registro de Usuarios
-        </Text>
+            <TextInput
+              style={styles.input}
+              placeholder="Edad"
+              value={edad}
+              onChangeText={setEdad}
+              keyboardType="numeric"
+              returnKeyType="done"
+              onSubmitEditing={guardarUsuario}
+            />
 
-        <TextInput
-          style={styles.input}
-          placeholder="Nombre del usuario"
-          value={nombre}
-          onChangeText={setNombre}
-        />
-
-        <TextInput
-          style={styles.input}
-          placeholder="Edad del usuario"
-          keyboardType="numeric"
-          value={edad}
-          onChangeText={setEdad}
-        />
-
-        <Pressable style={styles.boton} onPress={guardarUsuario} disabled={cargando}>
-          <Text style={styles.textoBoton}>
-            Agregar Usuario {cargando ? 'Guardando...' : ' Agregar usuario'}
-          </Text>
-        </Pressable>
-
-      </View>
-
+            <Pressable
+              style={[
+                styles.boton,
+                cargando && styles.botonDeshabilitado,
+              ]}
+              onPress={guardarUsuario}
+              disabled={cargando}
+            >
+              <Text style={styles.textoBoton}>
+                {cargando ? 'Guardando...' : 'Agregar usuario'}
+              </Text>
+            </Pressable>
+          </ScrollView>
+        </TouchableWithoutFeedback>
+      </KeyboardAvoidingView>
     </SafeAreaView>
   );
 }
 
 const styles = StyleSheet.create({
-
-  container: {
+  safeArea: {
     flex: 1,
-    backgroundColor: '#F5F7FA',
-    justifyContent: 'center',
-    alignItems: 'center',
-    padding: 20,
   },
 
-  card: {
-    width: '100%',
-    backgroundColor: '#FFFFFF',
-    padding: 25,
-    borderRadius: 15,
-    elevation: 5, 
-    shadowColor: '#000',
-    shadowOpacity: 0.15,
-    shadowRadius: 8,
-    shadowOffset: {
-      width: 0,
-      height: 3,
-    },
+  contenedor: {
+    flex: 1,
+  },
+
+  contenido: {
+    flexGrow: 1,
+    justifyContent: 'center',
+    padding: 24,
+    paddingBottom: 80,
   },
 
   titulo: {
     fontSize: 26,
     fontWeight: 'bold',
+    marginBottom: 24,
     textAlign: 'center',
-    marginBottom: 25,
-    color: '#1F2937',
   },
 
   input: {
-    height: 50,
     borderWidth: 1,
-    borderColor: '#D1D5DB',
+    borderColor: '#999',
     borderRadius: 10,
-    paddingHorizontal: 15,
-    marginBottom: 18,
-    backgroundColor: '#F9FAFB',
-    fontSize: 16,
+    padding: 14,
+    marginBottom: 16,
+    backgroundColor: '#fff',
   },
 
   boton: {
-    backgroundColor: '#29bb0c',
-    paddingVertical: 15,
+    padding: 16,
     borderRadius: 10,
+    backgroundColor: '#d63384',
     alignItems: 'center',
-    marginTop: 10,
+  },
+
+  botonDeshabilitado: {
+    opacity: 0.6,
   },
 
   textoBoton: {
-    color: '#FFFFFF',
-    fontSize: 17,
+    color: '#fff',
     fontWeight: 'bold',
   },
-
 });
