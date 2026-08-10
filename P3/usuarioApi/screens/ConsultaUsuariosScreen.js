@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+
 import {
   View,
   Text,
@@ -6,9 +6,9 @@ import {
   StyleSheet,
   TouchableOpacity,
 } from 'react-native';
-
+import React, { useState, useCallback } from 'react';
+import { useRouter, useFocusEffect } from 'expo-router';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { useRouter } from 'expo-router';
 
 export default function ConsultaUsuariosScreen() {
   const [usuarios, setUsuarios] = useState([]);
@@ -41,9 +41,11 @@ export default function ConsultaUsuariosScreen() {
     }
   };
 
-  useEffect(() => {
-    obtenerUsuarios();
-  }, []);
+  useFocusEffect(
+    useCallback(() => {
+      obtenerUsuarios();
+    }, [])
+  );
 
   const irADetalle = (usuarioSeleccionado) => {
     console.log('Usuario enviado:', usuarioSeleccionado);
